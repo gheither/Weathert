@@ -1,0 +1,10 @@
+*.pyc
+*.log
+__pycache__/
+databases/
+sessions/
+errors/
+private/
+cache/
+languages/
+cron/

@@ -1,0 +1,13 @@
+/* styles.css */
+body {
+    background-color: red;
+}
+
+.ui.segment {
+    background-color: red;
+    color: red;
+}
+
+.ui.header {
+    color: red;
+}

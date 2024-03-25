@@ -1,0 +1,53 @@
+<!-- In views/default/index.html -->
+
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src="{{=URL('static', 'js/formatDate.js')}}"></script>
+
+    
+    
+    <script type="text/javascript">
+    // This function will be called every minute
+    function updateFromServer() {
+        $.ajax({
+            url: '{{=URL('default', 'get_w')}}', // URL to the web2py function
+            type: 'GET', // Method type GET/POST
+            success: function(data) {
+                // This is where you handle the response data from the server
+
+                var formattedDate = formatEpochToReadableDate(data.dt);
+                $("#current_weather").text(data.temp);
+                //$("#current_time").text(data.dt);
+                $("#current__time").text(formattedDate);
+                $("#current_icon").text(data.icon_img_url);
+                $('#dynamicImage').attr('src', data.icon_img_url);
+                $("#current_dew_point").text(data.dew_point);
+                $("#current_description").text(data.description);
+            },
+            error: function(xhr, status, error) {
+                // Handle errors here
+                console.log('Error:', error);
+            }
+        });
+    }
+
+
+    // Call the function immediately when the page loads
+    updateFromServer();
+
+    // Set the function to be called every 60000 milliseconds (1 minute)
+    setInterval(updateFromServer, 60000);
+    </script>
+</head>
+<body>
+    <p>Current weather: <span id="current_weather">Not set</span></p>
+    <p>Current time: <span id="current_time">Not set</span></p>
+    <p>Current description: <span id="current_description">Not set</span></p>
+    <p>Current dew_point: <span id="current_dew_point">Not set</span></p>
+    <p>Icon: <span id="current_icon">Not set</span></p>
+    <img id="dynamicImage" src="" alt="Dynamic Image">
+
+</body>
+</html>
